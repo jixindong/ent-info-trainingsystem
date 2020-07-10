@@ -104,10 +104,10 @@
 import { mapState } from 'vuex';
 
 export default {
-	name: 'Index',
+	name: 'index',
 	components: {
-		EnterpriseInfoFtBar: () => import('../components/EnterpriseInfoFtBar.vue'), //企业信息底部栏
-		RemovableBox: () => import('../components/RemovableBox.vue') //提醒弹框
+		EnterpriseInfoFtBar: () => import('@/components/EnterpriseInfoFtBar.vue'), //企业信息底部栏
+		RemovableBox: () => import('@/components/RemovableBox.vue') //提醒弹框
 	},
 	data: function() {
 		return {

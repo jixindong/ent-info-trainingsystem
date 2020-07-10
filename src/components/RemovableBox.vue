@@ -107,12 +107,14 @@ export default {
 		}
 	},
 	mounted() {
-		// 设置 可移动盒子 宽度
-		this.setReBoxWidth();
-		// 设置 可移动盒子 位置
-		this.setReBoxPosition();
-		// 鼠标移动事件
-		this.mouseMoveEvent();
+		this.$nextTick(() => {
+			// 设置 可移动盒子 宽度
+			this.setReBoxWidth();
+			// 设置 可移动盒子 位置
+			this.setReBoxPosition();
+			// 鼠标移动事件
+			this.mouseMoveEvent();
+		});
 	}
 };
 </script>

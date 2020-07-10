@@ -187,7 +187,6 @@
 		<div class="btnBox fRow">
 			<div class="btn hover" @click="save()" v-show="!isSeeAnswer">保存</div>
 			<div class="btn hover" @click="close()">关闭</div>
-			<div class="btn hover" @click="seeAnswer()" v-show="!isSeeAnswer">查看答案</div>
 			<div class="btn hover" @click="backTo()" v-show="isSeeAnswer">返回</div>
 		</div>
 	</div>
@@ -198,8 +197,7 @@ export default {
 	name: 'EnterpriseBasicInfo',
 	data: function() {
 		return {
-			entInfo: '', //企业信息
-			isSeeAnswer: false //是否查看答案
+			entInfo: '' //企业信息
 		};
 	},
 	computed: {
@@ -267,12 +265,6 @@ export default {
 			this.$router.push({
 				path: '/enterpriseInfoFill/' + this.$store.state.registerProvince
 			});
-		},
-		// 查看答案按钮
-		seeAnswer() {
-			this.isSeeAnswer = true;
-
-			this.entInfo = Object.assign(this.$store.state.entInfoAnswer);
 		},
 		// 返回按钮
 		backTo() {

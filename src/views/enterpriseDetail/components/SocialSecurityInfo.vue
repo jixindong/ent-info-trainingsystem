@@ -174,7 +174,6 @@
 			<div class="btn hover" @click="save()" v-show="!isSeeAnswer">保存</div>
 			<div class="btn hover" @click="close()">关闭</div>
 			<div class="btn hover" @click="backTo()" v-show="isSeeAnswer">返回</div>
-			<div class="btn hover" @click="seeAnswer()" v-show="!isSeeAnswer">查看答案</div>
 		</div>
 	</div>
 </template>
@@ -186,15 +185,13 @@ export default {
 	name: 'SocialSecurityInfo',
 	data: function() {
 		return {
-			socialSecurity: '', //社保
-			isSeeAnswer: false //是否查看答案
+			socialSecurity: '' //社保
 		};
 	},
 	computed: {
 		...mapState({
 			province: state => state.registerProvince, //省份
-			entInfo: state => state.entInfo, //企业信息
-			socialSecurityAnswer: state => state.socialSecurityAnswer //社保 答案
+			entInfo: state => state.entInfo //企业信息
 		})
 	},
 	methods: {
@@ -247,12 +244,6 @@ export default {
 			this.isSeeAnswer = false;
 
 			this.socialSecurity = this.$store.state.socialSecurity;
-		},
-		// 查看答案按钮
-		seeAnswer() {
-			this.isSeeAnswer = true;
-
-			this.socialSecurity = Object.assign(this.$store.state.socialSecurityAnswer);
 		}
 	},
 	mounted() {

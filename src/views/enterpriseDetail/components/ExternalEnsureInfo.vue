@@ -195,50 +195,12 @@
 		</table>
 		<!-- 修改 end -->
 
-		<!-- 答案 -->
-		<table class="entDtlTbII" v-show="isSeeAnswer">
-			<thead>
-				<tr>
-					<th>债权人</th>
-					<th>债务人</th>
-					<th>主权债种类</th>
-					<th>主权债数额</th>
-					<th>履行债务的期限</th>
-					<th>保证的期间</th>
-					<th>保证的方式</th>
-					<th>公示状态</th>
-					<th>操作</th>
-				</tr>
-			</thead>
-			<tbody v-if="externalEnsureAnswer.length > 0">
-				<tr v-for="(item, index) in externalEnsureAnswer" :key="index">
-					<td>{{ item.zqr }}</td>
-					<td>{{ item.zwr }}</td>
-					<td>{{ item.zqzzl }}</td>
-					<td>{{ item.zqzse }}</td>
-					<td>{{ item.zwqxq }} - {{ item.zwqxz }}</td>
-					<td>{{ item.bzqj }}</td>
-					<td>{{ item.bzfs }}</td>
-					<td>{{ item.gszt }}</td>
-					<td>
-						<span class="operation">修改</span>
-						<span class="operation">删除</span>
-					</td>
-				</tr>
-			</tbody>
-			<tbody v-if="externalEnsureAnswer.length == 0">
-				<tr><td colspan="9">暂无相关数据，请点击下方“添加”按钮进行操作</td></tr>
-			</tbody>
-		</table>
-		<!-- 答案 end -->
-
 		<div class="btnBox fRow">
 			<div class="btn hover" @click="add()" v-show="!isAdd && !isModify && !isSeeAnswer">添加</div>
 			<div class="btn hover" @click="saveAdd()" v-show="isAdd">保存</div>
 			<div class="btn hover" @click="saveModify()" v-show="isModify">保存</div>
 			<div class="btn hover" @click="save()" v-show="!isAdd && !isModify && !isSeeAnswer">保存</div>
 			<div class="btn hover" @click="close()">关闭</div>
-			<div class="btn hover" @click="seeAnswer()" v-show="!isAdd && !isModify && !isSeeAnswer">查看答案</div>
 			<div class="btn hover" @click="backTo()" v-show="isAdd || isModify || isSeeAnswer">返回</div>
 		</div>
 
@@ -251,7 +213,7 @@
 
 			<!-- 头部 关闭按钮 -->
 			<template v-slot:reBoxHdCloseBtn>
-				<img src="../assets/close.png" @click="closeDelReBox()" />
+				<img src="@/assets/close.png" @click="closeDelReBox()" />
 			</template>
 
 			<!-- 主体 -->
@@ -275,7 +237,7 @@ import { mapState } from 'vuex';
 export default {
 	name: 'ExternalEnsureInfo',
 	components: {
-		RemovableBox: () => import('../components/RemovableBox.vue') //提醒弹框
+		RemovableBox: () => import('@/components/RemovableBox.vue') //提醒弹框
 	},
 	data: function() {
 		return {
@@ -315,16 +277,13 @@ export default {
 			modifyZwqxz: '', //修改 对外担保 履行债务的期限 止
 			// 删除
 			delItemIndex: null, //当前删除元素索引
-			isDelReBoxShow: false, //确认删除 提醒弹框 显示
-			// 查看答案
-			isSeeAnswer: false //是否查看答案
+			isDelReBoxShow: false //确认删除 提醒弹框 显示
 		};
 	},
 	computed: {
 		...mapState({
 			province: state => state.registerProvince, //省份
-			entInfo: state => state.entInfo, //企业信息
-			externalEnsureAnswer: state => state.externalEnsureAnswer //对外担保 答案
+			entInfo: state => state.entInfo //企业信息
 		})
 	},
 	watch: {
@@ -523,10 +482,6 @@ export default {
 			this.isAdd = false;
 			this.isModify = false;
 			this.isSeeAnswer = false;
-		},
-		// 查看答案按钮
-		seeAnswer() {
-			this.isSeeAnswer = true;
 		}
 	},
 	mounted() {

@@ -136,7 +136,6 @@
 		<div class="btnBox fRow">
 			<div class="btn hover" @click="save()" v-show="!isSeeAnswer">保存</div>
 			<div class="btn hover" @click="close()">关闭</div>
-			<div class="btn hover" @click="seeAnswer()" v-show="!isSeeAnswer">查看答案</div>
 			<div class="btn hover" @click="backTo()" v-show="isSeeAnswer">返回</div>
 		</div>
 	</div>
@@ -149,14 +148,12 @@ export default {
 	name: 'FinancialStandingInfo',
 	data: function() {
 		return {
-			financialStanding: '', //资产状况
-			isSeeAnswer: false //是否查看答案
+			financialStanding: '' //资产状况
 		};
 	},
 	computed: {
 		...mapState({
-			entInfo: state => state.entInfo, //企业信息
-			financialStandingAnswer: state => state.financialStandingAnswer //资产状况 答案
+			entInfo: state => state.entInfo //企业信息
 		})
 	},
 	methods: {
@@ -192,12 +189,6 @@ export default {
 			this.$router.push({
 				path: '/enterpriseInfoFill/' + this.province
 			});
-		},
-		// 查看答案按钮
-		seeAnswer() {
-			this.isSeeAnswer = true;
-
-			this.financialStanding = Object.assign(this.$store.state.financialStandingAnswer);
 		},
 		// 返回按钮
 		backTo() {
