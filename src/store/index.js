@@ -8,9 +8,13 @@ Vue.use(Vuex);
 // 2. 创建 Vuex 实例
 const store = new Vuex.Store({
 	state: {
-		yesteryear: '', //去年
-		isLogin: false, //登录状态
-		registerProvince: '', //省份
+		//去年
+		yesteryear: '',
+		//登录状态
+		isLogin: false,
+		//省份
+		registerProvince: '',
+		//工商联络员
 		users: [{
 			entName: '江苏问云电子商务有限公司', //企业名称
 			entCode: '91320903755666003E', //企业统一社会信用代码
@@ -20,7 +24,8 @@ const store = new Vuex.Store({
 			entPersonIdType: '中华人民共和国居民身份证', //工商联络员证件类型
 			entPersonIdNum: '320000199003172612', //工商联络员证件号码
 			entPersonTel: '025-85236974' //工商联络员手机号
-		}], //工商联络员
+		}],
+		//年度报告
 		annualReports: [{
 			year: '2018', //报告年份
 			lastModifiedDate: '2019年3月20日', //最后修改日期
@@ -171,9 +176,12 @@ const store = new Vuex.Store({
 				bldjsb: '10', //办理使用登记特种设备总台数
 				zjyxsb: '10' //检验有效期内特种设备总台数
 			} //特种设备
-		}], //年度报告
+		}],
+		// 答案
+		answer: {},
 
 		// ------------------------ 填写信息 ------------------------
+		//企业信息
 		entInfo: {
 			entName: '', //企业名称
 			entCode: '', //统一社会信用代码/注册号	
@@ -200,11 +208,16 @@ const store = new Vuex.Store({
 			isHaveWeb: '否', //是否有网站或网店
 			isStockTransfer: '否', //有限责任公司本年度是否发生股东股权转让
 			isInvestOther: '否' //是否有投资信息或购买其他公司股权
-		}, //企业信息
-		shareholderFund: [], //股东及出资
-		websiteOlStore: [], //网站或网店
-		equityAlter: [], //股权变更
-		externalInvest: [], //对外投资
+		},
+		//股东及出资
+		shareholderFund: [],
+		//网站或网店
+		websiteOlStore: [],
+		//股权变更
+		equityAlter: [],
+		//对外投资
+		externalInvest: [],
+		//资产状况
 		financialStanding: {
 			assetSum: '', //资产总额
 			assetSumPub: '不公示', //资产总额 公示不公示
@@ -222,14 +235,17 @@ const store = new Vuex.Store({
 			retainedProfitsSumPub: '不公示', //净利润 公示不公示
 			payTaxesSum: '', //纳税总额
 			payTaxesSumPub: '不公示' //纳税总额 公示不公示
-		}, //资产状况
-		externalEnsure: [], //对外担保
+		},
+		//对外担保
+		externalEnsure: [],
+		//党建
 		partyBuilding: {
 			pMNum: '', //中共党员（包括预备党员）人数
 			pOS: '未成立党组织', //党组织拟建制情况
 			isPrincipalPM: '否', //负责人是否党员
 			isPrincipalPOS: '否' //负责人是否党组织书记
-		}, //党建
+		},
+		//团建
 		leagueConstruction: {
 			isEstblOL: '建立团组织', //是否建立团组织
 			oMNum: '', //团员人数（含预备团员）
@@ -246,7 +262,8 @@ const store = new Vuex.Store({
 			// 未建立团组织
 			uneOLOS: '', //团组织拟建制情况
 			uneOLBuildMode: '' //团组织拟组建方式
-		}, //团建
+		},
+		//社保
 		socialSecurity: {
 			czylx: '', //城镇职工基本养老保险（单位：人）
 			syex: '', //失业保险（单位：人）
@@ -273,11 +290,13 @@ const store = new Vuex.Store({
 			dzylxqj: '', //单位参加职工基本医疗保险累计欠缴金额
 			dgsxqj: '', //单位参加工伤保险累计欠缴金额
 			dsyuxqj: '' //单位参加生育保险累计欠缴金额
-		}, //社保
+		},
+		//特种设备
 		specialEquipment: {
 			bldjsb: '', //办理使用登记特种设备总台数
 			zjyxsb: '' //检验有效期内特种设备总台数
-		}, //特种设备
+		},
+		//已填写信息
 		filledInfo: {
 			fEntInfo: false, //企业信息
 			fShareholderFund: false, //股东及出资
@@ -290,7 +309,7 @@ const store = new Vuex.Store({
 			fLeagueConstruction: false, //团建
 			fSocialSecurity: false, //社保
 			fSpecialEquipment: false //特种设备
-		} //已填写信息
+		}
 	},
 	getters: {
 		// 省份加括号
@@ -306,6 +325,9 @@ const store = new Vuex.Store({
 		//登录状态
 		isLogin(state, isli) {
 			state.isLogin = isli;
+
+			// 答案
+			state.answer.isLogin = isli;
 		},
 		//省份
 		registerProvince(state, pr) {
@@ -314,6 +336,9 @@ const store = new Vuex.Store({
 		//添加工商联络员
 		addUser(state, au) {
 			state.users.push(au);
+
+			// 答案
+			state.answer.users = state.users;
 		},
 		//修改工商联络员
 		modifyUser(state, mu) {
@@ -322,10 +347,16 @@ const store = new Vuex.Store({
 					state.users[i] = mu;
 				}
 			});
+
+			// 答案
+			state.answer.users = state.users;
 		},
 		//添加年度报告
 		addAnnualReport(state, aa) {
 			state.annualReports.push(aa);
+
+			// 答案
+			state.answer.annualReports = state.annualReports;
 		},
 		//修改年度报告
 		modifyAnnualReport(state, ma) {
@@ -334,110 +365,191 @@ const store = new Vuex.Store({
 					state.annualReports[i] = ma;
 				}
 			});
+
+			// 答案
+			state.answer.annualReports = state.annualReports;
 		},
 		//企业信息
 		entInfo(state, ei) {
 			state.entInfo = ei;
+
+			// 答案
+			state.answer.entInfo = ei;
 		},
 		//企业信息 是否有对外担保
 		isExSecurity(state, e) {
 			state.entInfo.isExSecurity = e;
+
+			// 答案
+			state.answer.entInfo.isExSecurity = e;
 		},
 		//企业信息 是否有网站或网店
 		isHaveWeb(state, e) {
 			state.entInfo.isHaveWeb = e;
+
+			// 答案
+			state.answer.entInfo.isHaveWeb = e;
 		},
 		//企业信息 有限责任公司本年度是否发生股东股权转让
 		isStockTransfer(state, e) {
 			state.entInfo.isStockTransfer = e;
+
+			// 答案
+			state.answer.entInfo.isStockTransfer = e;
 		},
 		//企业信息 是否有投资信息或购买其他公司股权
 		isInvestOther(state, e) {
 			state.entInfo.isInvestOther = e;
+
+			// 答案
+			state.answer.entInfo.isInvestOther = e;
 		},
 		//股东及出资
 		shareholderFund(state, shf) {
 			state.shareholderFund = shf;
+
+			// 答案
+			state.answer.shareholderFund = shf;
 		},
 		//网站或网店
 		websiteOlStore(state, web) {
 			state.websiteOlStore = web;
+
+			// 答案
+			state.answer.websiteOlStore = web;
 		},
 		//股权变更
 		equityAlter(state, ea) {
 			state.equityAlter = ea;
+
+			// 答案
+			state.answer.equityAlter = ea;
 		},
 		//对外投资
 		externalInvest(state, exi) {
 			state.externalInvest = exi;
+
+			// 答案
+			state.answer.externalInvest = exi;
 		},
 		//资产状况
 		financialStanding(state, fs) {
 			state.financialStanding = fs;
+
+			// 答案
+			state.answer.financialStanding = fs;
 		},
 		//对外担保
 		externalEnsure(state, exe) {
 			state.externalEnsure = exe;
+
+			// 答案
+			state.answer.externalEnsure = exe;
 		},
 		//党建
 		partyBuilding(state, pb) {
 			state.partyBuilding = pb;
+
+			// 答案
+			state.answer.partyBuilding = pb;
 		},
 		//团建
 		leagueConstruction(state, lc) {
 			state.leagueConstruction = lc;
+
+			// 答案
+			state.answer.leagueConstruction = lc;
 		},
 		//社保
 		socialSecurity(state, ss) {
 			state.socialSecurity = ss;
+
+			// 答案
+			state.answer.socialSecurity = ss;
 		},
 		//特种设备
 		specialEquipment(state, se) {
 			state.specialEquipment = se;
+
+			// 答案
+			state.answer.specialEquipment = se;
 		},
 		//已填写信息 企业信息
 		fEntInfo(state, fe) {
 			state.filledInfo.fEntInfo = fe;
+
+			// 答案
+			state.answer.filledInfo.fEntInfo = fe;
 		},
 		//已填写信息 股东及出资
 		fShareholderFund(state, fs) {
 			state.filledInfo.fShareholderFund = fs;
+
+			// 答案
+			state.answer.filledInfo.fShareholderFund = fs;
 		},
 		//已填写信息 网站或网店
 		fWebsiteOlStore(state, fw) {
 			state.filledInfo.fWebsiteOlStore = fw;
+
+			// 答案
+			state.answer.filledInfo.fWebsiteOlStore = fw;
 		},
 		//已填写信息 股权变更
 		fEquityAlter(state, fe) {
 			state.filledInfo.fEquityAlter = fe;
+
+			// 答案
+			state.answer.filledInfo.fEquityAlter = fe;
 		},
 		//已填写信息 对外投资
 		fExternalInvest(state, fe) {
 			state.filledInfo.fExternalInvest = fe;
+
+			// 答案
+			state.answer.filledInfo.fExternalInvest = fe;
 		},
 		//已填写信息 资产状况
 		fFinancialStanding(state, ff) {
 			state.filledInfo.fFinancialStanding = ff;
+
+			// 答案
+			state.answer.filledInfo.fFinancialStanding = ff;
 		},
 		//已填写信息 对外担保
 		fExternalEnsure(state, fe) {
 			state.filledInfo.fExternalEnsure = fe;
+
+			// 答案
+			state.answer.filledInfo.fExternalEnsure = fe;
 		},
 		//已填写信息 党建
 		fPartyBuilding(state, fp) {
 			state.filledInfo.fPartyBuilding = fp;
+
+			// 答案
+			state.answer.filledInfo.fPartyBuilding = fp;
 		},
 		//已填写信息 团建
 		fLeagueConstruction(state, fl) {
 			state.filledInfo.fLeagueConstruction = fl;
+
+			// 答案
+			state.answer.filledInfo.fLeagueConstruction = fl;
 		},
 		//已填写信息 社保
 		fSocialSecurity(state, fs) {
 			state.filledInfo.fSocialSecurity = fs;
+
+			// 答案
+			state.answer.filledInfo.fSocialSecurity = fs;
 		},
 		//已填写信息 特种设备
 		fSpecialEquipment(state, fs) {
 			state.filledInfo.fSpecialEquipment = fs;
+
+			// 答案
+			state.answer.filledInfo.fSpecialEquipment = fs;
 		}
 	},
 	actions: {
